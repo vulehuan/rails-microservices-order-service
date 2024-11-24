@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_23_232826) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_001627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_23_232826) do
     t.decimal "total_price", precision: 15, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "shipping_address_line1", null: false
+    t.string "shipping_address_line2"
+    t.string "shipping_city", null: false
+    t.string "shipping_state"
+    t.string "shipping_zip_code"
+    t.string "shipping_country", null: false
+    t.string "recipient_name", null: false
+    t.string "recipient_phone", null: false
+    t.text "order_notes"
+    t.text "admin_notes"
     t.index ["order_number"], name: "index_orders_on_order_number", unique: true
     t.index ["status", "user_id"], name: "index_orders_on_status_and_user_id"
   end
