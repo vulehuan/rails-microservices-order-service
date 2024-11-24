@@ -4,6 +4,8 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from CanCan::AccessDenied, with: :access_denied
 
+  include Pagy::Backend
+
   before_action :authenticate_request
 
   private
@@ -13,13 +15,13 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_request
-    token = request.headers['Authorization']&.split(' ')&.last
+    @token = request.headers['Authorization']&.split(' ')&.last
 
-    if token
+    if @token
       begin
-        payload = JWT.decode(token, ENV['JWT_KEY'], true, algorithm: 'HS256')
+        payload = JWT.decode(@token, ENV['JWT_KEY'], true, algorithm: 'HS256')
         @current_user_role = payload[0]['role']
-        @current_user_id = payload[0]['id']
+        @current_user_id = payload[0]['user_id']
       rescue JWT::DecodeError => e
         render json: { error: 'Invalid or expired token', message: e.message }, status: :unauthorized
       end
