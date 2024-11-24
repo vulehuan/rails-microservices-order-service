@@ -6,7 +6,7 @@ class Ability
 
     if current_user_role == 'admin'
       can :manage, :all
-    elsif current_user_role == 'user'
+    else
       can :manage, Order, user_id: current_user_id
       can :read, OrderStatusHistory, order: { user_id: current_user_id }
     end

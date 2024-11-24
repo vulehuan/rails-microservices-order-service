@@ -14,7 +14,7 @@ class Shipment < ApplicationRecord
   private
 
   def update_delivered_at
-    if status == 'delivered' && delivered_at.nil?
+    if shipment_status == 'delivered' && delivered_at.nil?
       self.delivered_at = Time.current
     end
   end

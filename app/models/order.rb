@@ -2,6 +2,7 @@
 
 class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
+  has_one :payment, dependent: :destroy
   has_one :shipment, dependent: :destroy
 
   validates :order_number, presence: true, uniqueness: true
